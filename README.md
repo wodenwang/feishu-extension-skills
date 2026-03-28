@@ -72,7 +72,7 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 ### 1. 建群
 
 ```bash
-feishu-extension-skills invoke feishu-chat-create --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","name":"项目临时群","user_id_list":["ou_dc55aee11054ce6de978e4449c2cb0a6"],"owner_id":"ou_dc55aee11054ce6de978e4449c2cb0a6"}'
+feishu-extension-skills invoke feishu-chat-create --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","name":"项目临时群","user_id_list":["ou_xxx_owner"],"owner_id":"ou_xxx_owner"}'
 ```
 
 ### 2. 查群详情
@@ -94,13 +94,13 @@ feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"
 下面示例使用 `open_id` 拉人：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"oc_xxx","user_id_list":["ou_06e0a84e51f816524e32856ffcaf1a51","ou_49ae97127f3acee64e92ce4b9c167574"],"member_id_type":"open_id"}'
+feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"oc_xxx","user_id_list":["ou_xxx_member_a","ou_xxx_member_b"],"member_id_type":"open_id"}'
 ```
 
 ### 5. 移出群成员
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"oc_xxx","member_id":"ou_49ae97127f3acee64e92ce4b9c167574","member_id_type":"open_id"}'
+feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"oc_xxx","member_id":"ou_xxx_member_b","member_id_type":"open_id"}'
 ```
 
 ### 6. 解散群
@@ -113,11 +113,11 @@ feishu-extension-skills invoke feishu-chat-disband --args-json '{"app_id":"cli_x
 
 下面这类自然语言请求适合直接交给 OpenClaw：
 
-- “用飞书 skill 建一个群，群名叫项目临时群，拉入王文哲和赵传耀。”
+- “用飞书 skill 建一个群，群名叫项目临时群，拉入王小明和赵小华。”
 - “查询这个飞书群的详情。”
 - “列出这个群当前所有成员。”
-- “把赵志鸿拉进这个群，成员标识用 open_id。”
-- “把赵志鸿从群里移除。”
+- “把孙小宁拉进这个群，成员标识用 open_id。”
+- “把孙小宁从群里移除。”
 - “测试结束后把这个群解散。”
 
 ## 常见注意点

@@ -21,9 +21,16 @@
 
 - `docs/test/report/uat-test-cases.md`
 - `docs/test/report/uat-report-*.md`
-- `docs/test/report/artifacts/`
+- `docs/test/local/`
 
 这里放人工或半人工执行的 testcase、报告和证据，不与自动化单测混放。
+
+约定：
+
+- 仓库内提交的 `docs/test/report/` 只保留脱敏后的 testcase 和结论性报告
+- 真实 `app_id`、`app_secret`、`open_id`、`chat_id`、原始返回报文和截图等证据，统一放在本地 `docs/test/local/`
+- `docs/test/local/` 已加入 `.gitignore`，不得提交到 GitHub
+- 本地配置可参考 `docs/test/feishu-test-secrets.example.json`
 
 ## 4. 当前 testcase 约定
 

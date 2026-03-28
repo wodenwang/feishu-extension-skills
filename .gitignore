@@ -2,6 +2,10 @@
 __pycache__/
 .pytest_cache/
 .venv/
+.local/
+docs/test/local/
+docs/test/report/artifacts/
+docs/test/report/live-uat-*/
 dist/
 build/
 *.pyc

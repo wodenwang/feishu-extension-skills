@@ -1,1 +1,0 @@
-{'fetch_count': 1, 'first_token_prefix': 't-g1043s', 'second_token_prefix': 't-g1043s', 'same_token': True, 'cache_reused': True}

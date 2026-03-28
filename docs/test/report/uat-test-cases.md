@@ -31,14 +31,14 @@
 
 应用凭证：
 
-- `app_id`: `cli_a926815318b81bc4`
-- `app_secret`: 已提供，不在文档中重复明文记录
+- `app_id`: `cli_xxx`
+- `app_secret`: `sec_xxx`
 
 测试成员：
 
-- 王文哲：`ou_dc55aee11054ce6de978e4449c2cb0a6`
-- 赵传耀：`ou_06e0a84e51f816524e32856ffcaf1a51`
-- 赵志鸿：`ou_49ae97127f3acee64e92ce4b9c167574`
+- 王小明：`ou_xxx_owner`
+- 赵小华：`ou_xxx_member_a`
+- 孙小宁：`ou_xxx_member_b`
 
 ## 4. 执行约定
 
@@ -80,7 +80,7 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-create --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","name":"UAT-群组测试","user_id_list":["ou_dc55aee11054ce6de978e4449c2cb0a6"],"owner_id":"ou_dc55aee11054ce6de978e4449c2cb0a6"}'
+feishu-extension-skills invoke feishu-chat-create --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","name":"UAT-群组测试","user_id_list":["ou_xxx_owner"],"owner_id":"ou_xxx_owner"}'
 ```
 
 预期：
@@ -100,7 +100,7 @@ feishu-extension-skills invoke feishu-chat-create --args-json '{"app_id":"cli_a9
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-get --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-get --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>"}'
 ```
 
 预期：
@@ -114,20 +114,20 @@ feishu-extension-skills invoke feishu-chat-get --args-json '{"app_id":"cli_a9268
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id_type":"open_id"}'
 ```
 
 预期：
 
 - `ok=true`
-- `items` 中包含王文哲
+- `items` 中包含王小明
 
 ### UAT-004: 拉人入群
 
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>","user_id_list":["ou_06e0a84e51f816524e32856ffcaf1a51","ou_49ae97127f3acee64e92ce4b9c167574"]}'
+feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","user_id_list":["ou_xxx_member_a","ou_xxx_member_b"],"member_id_type":"open_id"}'
 ```
 
 预期：
@@ -141,20 +141,20 @@ feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cl
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id_type":"open_id"}'
 ```
 
 预期：
 
 - `ok=true`
-- `items` 中包含王文哲、赵传耀、赵志鸿
+- `items` 中包含王小明、赵小华、孙小宁
 
 ### UAT-006: 移出群成员
 
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>","member_id":"ou_49ae97127f3acee64e92ce4b9c167574"}'
+feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id":"ou_xxx_member_b","member_id_type":"open_id"}'
 ```
 
 预期：
@@ -168,13 +168,13 @@ feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id_type":"open_id"}'
 ```
 
 预期：
 
 - `ok=true`
-- `items` 中不再包含赵志鸿
+- `items` 中不再包含孙小宁
 
 ## 7. 清理用例
 
@@ -183,7 +183,7 @@ feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"
 命令：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-disband --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-disband --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>"}'
 ```
 
 预期：
@@ -205,8 +205,8 @@ feishu-extension-skills invoke feishu-chat-disband --args-json '{"app_id":"cli_a
 示例：
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id_type":"open_id"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id_type":"open_id"}'
 ```
 
 预期：
@@ -219,7 +219,7 @@ feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"
 ### UAT-F01: 缺少必填参数
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx"}'
 ```
 
 预期：
@@ -230,7 +230,7 @@ feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"
 ### UAT-F02: 空成员列表
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>","user_id_list":[]}'
+feishu-extension-skills invoke feishu-chat-member-add --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","user_id_list":[]}'
 ```
 
 预期：
@@ -252,7 +252,7 @@ feishu-extension-skills invoke demo.missing --args-json '{}'
 ### UAT-F04: 非法 `member_id_type`
 
 ```bash
-feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"<chat_id>","member_id":"ou_49ae97127f3acee64e92ce4b9c167574","member_id_type":"email"}'
+feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"<chat_id>","member_id":"ou_xxx_member_b","member_id_type":"email"}'
 ```
 
 预期：
@@ -263,7 +263,7 @@ feishu-extension-skills invoke feishu-chat-member-remove --args-json '{"app_id":
 ### UAT-F05: 非法 `chat_id`
 
 ```bash
-feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_a926815318b81bc4","app_secret":"<provided>","chat_id":"oc_invalid_chat_id"}'
+feishu-extension-skills invoke feishu-chat-members-list --args-json '{"app_id":"cli_xxx","app_secret":"sec_xxx","chat_id":"oc_invalid_chat_id"}'
 ```
 
 预期：
