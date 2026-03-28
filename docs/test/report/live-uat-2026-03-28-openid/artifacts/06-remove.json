@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "action": "feishu-chat-member-remove",
+  "data": {
+    "chat_id": "oc_2bc69cec9ff38591852caf663fca38b9",
+    "status": "ok",
+    "added_member_ids": [],
+    "failed_member_ids": [],
+    "removed_member_id": "ou_49ae97127f3acee64e92ce4b9c167574"
+  },
+  "error": null
+}

@@ -19,6 +19,9 @@ dev = [
   "pytest>=8.2,<9",
 ]
 
+[project.scripts]
+feishu-extension-skills = "feishu_extension_skills.cli.app:main"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
@@ -27,5 +30,5 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-testpaths = ["tests"]
+testpaths = ["docs/test"]
 addopts = "-q"

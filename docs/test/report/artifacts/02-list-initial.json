@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "action": "feishu-chat-members-list",
+  "data": {
+    "chat_id": "oc_4ebf14a797cca2cee684bfc6c50288fb",
+    "items": [
+      {
+        "member_id": "f23b315a",
+        "name": "王文哲",
+        "member_id_type": "user_id",
+        "raw": {
+          "member_id": "f23b315a",
+          "member_id_type": "user_id",
+          "name": "王文哲",
+          "tenant_key": "1bf6b859c702975f"
+        }
+      },
+      {
+        "member_id": "a45c724f",
+        "name": "赵传耀",
+        "member_id_type": "user_id",
+        "raw": {
+          "member_id": "a45c724f",
+          "member_id_type": "user_id",
+          "name": "赵传耀",
+          "tenant_key": "1bf6b859c702975f"
+        }
+      }
+    ],
+    "has_more": false,
+    "page_token": ""
+  },
+  "error": null
+}

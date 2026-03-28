@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "action": "feishu-chat-get",
+  "data": {
+    "chat_id": "oc_288d4250a840304238d880d407a1b740",
+    "raw": {}
+  },
+  "error": null
+}

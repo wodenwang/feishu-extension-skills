@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "action": "feishu-chat-members-list",
+  "data": null,
+  "error": {
+    "code": "validation_error",
+    "message": "1 validation error for FeishuAPIEnvelope\nerror\n  Extra inputs are not permitted [type=extra_forbidden, input_value={'log_id': '2026032812535...tion': 'id not exist'}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/extra_forbidden",
+    "details": null
+  }
+}

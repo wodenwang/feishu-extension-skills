@@ -1,1 +1,0 @@
-"""Bitable service."""

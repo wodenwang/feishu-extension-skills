@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "action": "feishu-chat-member-add",
+  "data": {
+    "chat_id": "oc_2bc69cec9ff38591852caf663fca38b9",
+    "status": "ok",
+    "added_member_ids": [
+      "ou_06e0a84e51f816524e32856ffcaf1a51",
+      "ou_49ae97127f3acee64e92ce4b9c167574"
+    ],
+    "failed_member_ids": []
+  },
+  "error": null
+}

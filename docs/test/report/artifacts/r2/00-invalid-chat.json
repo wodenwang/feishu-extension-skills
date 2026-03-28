@@ -1,0 +1,30 @@
+{
+  "ok": false,
+  "action": "feishu-chat-members-list",
+  "data": null,
+  "error": {
+    "code": "feishu_api_error",
+    "message": "The request you send is not a valid {open_chat_id} or not exists, and the example value is {oc_da5****************dfe}. Invalid ids: [oc_invalid_round2] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit",
+    "details": {
+      "status_code": 400,
+      "code": 99992356,
+      "msg": "The request you send is not a valid {open_chat_id} or not exists, and the example value is {oc_da5****************dfe}. Invalid ids: [oc_invalid_round2] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit",
+      "request_id": null,
+      "payload": {
+        "code": 99992356,
+        "msg": "The request you send is not a valid {open_chat_id} or not exists, and the example value is {oc_da5****************dfe}. Invalid ids: [oc_invalid_round2] . Please see field_violations for details and refer to API documentation to correct accordingly and resubmit",
+        "error": {
+          "log_id": "20260328130847C958F688FFB3DB1E0151",
+          "troubleshooter": "排查建议查看(Troubleshooting suggestions): https://open.feishu.cn/search?from=openapi&log_id=20260328130847C958F688FFB3DB1E0151&code=99992356&method_id=6936075528891105308",
+          "field_violations": [
+            {
+              "field": "chat_id",
+              "value": "oc_invalid_round2",
+              "description": "id not exist"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

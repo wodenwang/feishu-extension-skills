@@ -13,7 +13,8 @@ from .models import (
     ChatOperationResult,
     ChatSummary,
     CreateChatInput,
-    DeleteChatInput,
+    DisbandChatInput,
+    GetChatInput,
     ListChatMembersInput,
     RemoveChatMemberInput,
 )
@@ -27,13 +28,13 @@ class ImChatService:
         self._require_credentials(payload.app_id, payload.app_secret)
         return self._client.create_chat(self._auth_context(payload), payload)
 
-    def get_chat_detail(self, payload: CreateChatInput | ListChatMembersInput | AddChatMembersInput | RemoveChatMemberInput, chat_id: str) -> ChatSummary:
+    def get_chat(self, payload: GetChatInput) -> ChatSummary:
         self._require_credentials(payload.app_id, payload.app_secret)
-        return self._client.get_chat(self._auth_context(payload), chat_id)
+        return self._client.get_chat(self._auth_context(payload), payload.chat_id)
 
-    def delete_chat(self, payload: DeleteChatInput) -> ChatOperationResult:
+    def disband_chat(self, payload: DisbandChatInput) -> ChatOperationResult:
         self._require_credentials(payload.app_id, payload.app_secret)
-        return self._call_with_auth("delete_chat", payload)
+        return self._call_with_auth("disband_chat", payload)
 
     def list_chat_members(self, payload: ListChatMembersInput) -> ChatMembersPage:
         self._require_credentials(payload.app_id, payload.app_secret)
@@ -84,9 +85,15 @@ def create_chat_action(args: dict[str, Any], service: ImChatService | None = Non
     return result.model_dump(exclude_none=True)
 
 
-def delete_chat_action(args: dict[str, Any], service: ImChatService | None = None) -> dict[str, Any]:
-    payload = _validate_and_build(DeleteChatInput, args)
-    result = (service or ImChatService()).delete_chat(payload)
+def get_chat_action(args: dict[str, Any], service: ImChatService | None = None) -> dict[str, Any]:
+    payload = _validate_and_build(GetChatInput, args)
+    result = (service or ImChatService()).get_chat(payload)
+    return result.model_dump(exclude_none=True)
+
+
+def disband_chat_action(args: dict[str, Any], service: ImChatService | None = None) -> dict[str, Any]:
+    payload = _validate_and_build(DisbandChatInput, args)
+    result = (service or ImChatService()).disband_chat(payload)
     return result.model_dump(exclude_none=True)
 
 
@@ -110,9 +117,10 @@ def remove_chat_member_action(args: dict[str, Any], service: ImChatService | Non
 
 __all__ = [
     "ImChatService",
-    "delete_chat_action",
     "add_chat_members_action",
     "create_chat_action",
+    "disband_chat_action",
+    "get_chat_action",
     "list_chat_members_action",
     "remove_chat_member_action",
 ]

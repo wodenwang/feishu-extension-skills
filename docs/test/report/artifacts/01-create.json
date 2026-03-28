@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "action": "feishu-chat-create",
+  "data": {
+    "chat_id": "oc_4ebf14a797cca2cee684bfc6c50288fb",
+    "name": "codex-uat-20260328-124828",
+    "owner_id": "ou_dc55aee11054ce6de978e4449c2cb0a6",
+    "description": "",
+    "chat_mode": "group",
+    "avatar_url": "https://s1-imfile.feishucdn.com/static-resource/v1/default-avatar_40d1790f-e108-418f-90a6-6a4bba4bf018~?image_size=100x100&cut_type=&quality=&format=jpeg&sticker_format=.webp",
+    "raw": {
+      "add_member_permission": "all_members",
+      "at_all_permission": "all_members",
+      "avatar": "https://s1-imfile.feishucdn.com/static-resource/v1/default-avatar_40d1790f-e108-418f-90a6-6a4bba4bf018~?image_size=100x100&cut_type=&quality=&format=jpeg&sticker_format=.webp",
+      "chat_id": "oc_4ebf14a797cca2cee684bfc6c50288fb",
+      "chat_mode": "group",
+      "chat_tag": "no_tag",
+      "chat_type": "private",
+      "description": "",
+      "edit_permission": "all_members",
+      "external": false,
+      "group_message_type": "chat",
+      "hide_member_count_setting": "all_members",
+      "i18n_names": {
+        "en_us": "",
+        "ja_jp": "",
+        "zh_cn": ""
+      },
+      "join_message_visibility": "all_members",
+      "leave_message_visibility": "only_owner",
+      "membership_approval": "no_approval_required",
+      "moderation_permission": "all_members",
+      "name": "codex-uat-20260328-124828",
+      "owner_id": "ou_dc55aee11054ce6de978e4449c2cb0a6",
+      "owner_id_type": "open_id",
+      "pin_manage_setting": "all_members",
+      "share_card_permission": "allowed",
+      "tenant_key": "1bf6b859c702975f",
+      "urgent_setting": "all_members",
+      "video_conference_setting": "all_members"
+    }
+  },
+  "error": null
+}

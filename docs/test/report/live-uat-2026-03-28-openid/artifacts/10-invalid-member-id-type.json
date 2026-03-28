@@ -1,0 +1,10 @@
+{
+  "ok": false,
+  "action": "feishu-chat-member-remove",
+  "data": null,
+  "error": {
+    "code": "validation_error",
+    "message": "1 validation error for RemoveChatMemberInput\nmember_id_type\n  Value error, member_id_type must be user_id or open_id [type=value_error, input_value='email', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.12/v/value_error",
+    "details": null
+  }
+}

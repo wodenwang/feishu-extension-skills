@@ -16,7 +16,7 @@ from .models import (
     ChatSummary,
     CreateChatInput,
     DEFAULT_BASE_URL,
-    DeleteChatInput,
+    DisbandChatInput,
     FeishuAPIEnvelope,
     ListChatMembersInput,
     RemoveChatMemberInput,
@@ -25,7 +25,6 @@ from .models import (
 CHAT_CREATE_PATH = "/open-apis/im/v1/chats"
 CHAT_DETAIL_PATH = "/open-apis/im/v1/chats/{chat_id}"
 CHAT_MEMBERS_PATH = "/open-apis/im/v1/chats/{chat_id}/members"
-CHAT_MEMBER_PATH = "/open-apis/im/v1/chats/{chat_id}/members/{member_id}"
 
 
 class ImChatError(RuntimeError):
@@ -125,19 +124,21 @@ class ImChatAPIClient:
         summary = self._parse_chat_summary(response_data)
         if summary.chat_id:
             return summary
+        if summary.raw:
+            return summary.model_copy(update={"chat_id": chat_id})
         if fallback is not None:
             return fallback
         return ChatSummary(chat_id=chat_id)
 
-    def delete_chat(
+    def disband_chat(
         self,
-        auth_context: AuthContext | DeleteChatInput,
-        payload: DeleteChatInput | None = None,
+        auth_context: AuthContext | DisbandChatInput,
+        payload: DisbandChatInput | None = None,
     ) -> ChatOperationResult:
         auth_context, payload = self._resolve_auth_and_payload(auth_context, payload)
         response_data = self._request("DELETE", CHAT_DETAIL_PATH.format(chat_id=payload.chat_id), auth_context)
         member_count = self._extract_int(response_data, ("member_count",))
-        return ChatOperationResult(chat_id=payload.chat_id, status="deleted", member_count=member_count)
+        return ChatOperationResult(chat_id=payload.chat_id, status="disbanded", member_count=member_count)
 
     def list_chat_members(
         self,
@@ -301,7 +302,7 @@ class ImChatAPIClient:
         return ChatSummary(
             chat_id=chat_id,
             name=self._extract_value(chat_data, ("name",)),
-            member_count=self._extract_int(chat_data, ("member_count", "member_num")),
+            member_count=self._extract_int(chat_data, ("member_count", "member_num", "user_count")),
             owner_id=self._extract_value(chat_data, ("owner_id", "owner")),
             description=self._extract_value(chat_data, ("description",)),
             chat_mode=self._extract_value(chat_data, ("chat_mode",)),

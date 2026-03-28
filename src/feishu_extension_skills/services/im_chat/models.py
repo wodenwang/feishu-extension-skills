@@ -52,7 +52,19 @@ class CreateChatInput(ChatAuthInput):
         return _dedupe_preserve_order(cleaned)
 
 
-class DeleteChatInput(ChatAuthInput):
+class GetChatInput(ChatAuthInput):
+    chat_id: str
+
+    @field_validator("chat_id")
+    @classmethod
+    def validate_chat_id(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("chat_id cannot be empty")
+        return value
+
+
+class DisbandChatInput(ChatAuthInput):
     chat_id: str
 
     @field_validator("chat_id")
