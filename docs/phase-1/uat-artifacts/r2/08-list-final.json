@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "action": "feishu.chat.members.list",
+  "data": {
+    "chat_id": "oc_4ebf14a797cca2cee684bfc6c50288fb",
+    "items": [
+      {
+        "member_id": "ou_dc55aee11054ce6de978e4449c2cb0a6",
+        "name": "王文哲",
+        "member_id_type": "open_id",
+        "raw": {
+          "member_id": "ou_dc55aee11054ce6de978e4449c2cb0a6",
+          "member_id_type": "open_id",
+          "name": "王文哲",
+          "tenant_key": "1bf6b859c702975f"
+        }
+      },
+      {
+        "member_id": "ou_06e0a84e51f816524e32856ffcaf1a51",
+        "name": "赵传耀",
+        "member_id_type": "open_id",
+        "raw": {
+          "member_id": "ou_06e0a84e51f816524e32856ffcaf1a51",
+          "member_id_type": "open_id",
+          "name": "赵传耀",
+          "tenant_key": "1bf6b859c702975f"
+        }
+      },
+      {
+        "member_id": "ou_49ae97127f3acee64e92ce4b9c167574",
+        "name": "赵志鸿",
+        "member_id_type": "open_id",
+        "raw": {
+          "member_id": "ou_49ae97127f3acee64e92ce4b9c167574",
+          "member_id_type": "open_id",
+          "name": "赵志鸿",
+          "tenant_key": "1bf6b859c702975f"
+        }
+      }
+    ],
+    "has_more": false,
+    "page_token": ""
+  },
+  "error": null
+}
