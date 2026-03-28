@@ -43,10 +43,13 @@ metadata: {"openclaw":{"emoji":"💬","homepage":"https://github.com/wodenwang/f
 
 ## 通用输入
 
-所有 action 都要求：
+凭证优先级如下：
 
-- `app_id`
-- `app_secret`
+1. action 显式传入 `app_id` / `app_secret`
+2. 当前工作目录下的 `.local/feishu-extension-skills.json`
+3. 环境变量 `FEISHU_APP_ID` / `FEISHU_APP_SECRET`
+
+如果这 3 层都没有命中，调用会失败。
 
 群相关 action 还需要按场景提供：
 
@@ -72,6 +75,15 @@ ClawHub 安装：
 
 ```bash
 clawhub install feishu-chat-server-api
+```
+
+本地配置文件示例：
+
+```json
+{
+  "app_id": "cli_xxx",
+  "app_secret": "sec_xxx"
+}
 ```
 
 示例：

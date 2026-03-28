@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import json
+import os
+from pathlib import Path
 from typing import Any, Mapping
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError as PydanticValidationError
 
 from .errors import ConfigError
+
+LOCAL_CONFIG_PATH = Path(".local/feishu-extension-skills.json")
 
 
 class AppConfig(BaseModel):
@@ -31,6 +36,24 @@ def _coalesce(*values: Any) -> Any:
     return None
 
 
+def _load_local_config(local_config_path: str | Path | None = None) -> Mapping[str, Any]:
+    path = Path(local_config_path) if local_config_path is not None else LOCAL_CONFIG_PATH
+    if not path.is_file():
+        return {}
+
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise ConfigError(f"invalid local configuration file: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise ConfigError(f"invalid local configuration file: {path}") from exc
+
+    if not isinstance(payload, dict):
+        raise ConfigError(f"invalid local configuration file: {path}")
+
+    return payload
+
+
 def load_config(
     *,
     app_id: str | None = None,
@@ -40,18 +63,28 @@ def load_config(
     token_refresh_skew_seconds: int | None = None,
     log_level: str | None = None,
     env: Mapping[str, str] | None = None,
+    local_config: Mapping[str, Any] | None = None,
+    local_config_path: str | Path | None = None,
 ) -> AppConfig:
-    environment = env or {}
-    resolved_app_id = _coalesce(app_id, environment.get("FEISHU_APP_ID"))
-    resolved_app_secret = _coalesce(app_secret, environment.get("FEISHU_APP_SECRET"))
-    resolved_base_url = _coalesce(base_url, environment.get("FEISHU_BASE_URL"), "https://open.feishu.cn")
-    resolved_timeout_seconds = _coalesce(timeout_seconds, environment.get("FEISHU_TIMEOUT_SECONDS"), 10.0)
+    environment = dict(os.environ if env is None else env)
+    file_config = dict(local_config) if local_config is not None else dict(_load_local_config(local_config_path))
+
+    resolved_app_id = _coalesce(app_id, file_config.get("app_id"), environment.get("FEISHU_APP_ID"))
+    resolved_app_secret = _coalesce(app_secret, file_config.get("app_secret"), environment.get("FEISHU_APP_SECRET"))
+    resolved_base_url = _coalesce(base_url, file_config.get("base_url"), environment.get("FEISHU_BASE_URL"), "https://open.feishu.cn")
+    resolved_timeout_seconds = _coalesce(
+        timeout_seconds,
+        file_config.get("timeout_seconds"),
+        environment.get("FEISHU_TIMEOUT_SECONDS"),
+        10.0,
+    )
     resolved_token_refresh_skew_seconds = _coalesce(
         token_refresh_skew_seconds,
+        file_config.get("token_refresh_skew_seconds"),
         environment.get("FEISHU_TOKEN_REFRESH_SKEW_SECONDS"),
         60,
     )
-    resolved_log_level = _coalesce(log_level, environment.get("FEISHU_LOG_LEVEL"), "INFO")
+    resolved_log_level = _coalesce(log_level, file_config.get("log_level"), environment.get("FEISHU_LOG_LEVEL"), "INFO")
 
     if resolved_app_id is None:
         raise ConfigError("missing required configuration: app_id")

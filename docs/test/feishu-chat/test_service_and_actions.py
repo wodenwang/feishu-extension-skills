@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 from feishu_extension_skills.services.im_chat.actions import ACTION_HANDLERS, FEISHU_CHAT_CREATE, FEISHU_CHAT_DISBAND, FEISHU_CHAT_GET, FEISHU_CHAT_MEMBER_ADD, FEISHU_CHAT_MEMBER_REMOVE, FEISHU_CHAT_MEMBERS_LIST, invoke_action
 from feishu_extension_skills.services.im_chat.models import ChatMembersPage, ChatOperationResult, ChatSummary
 from feishu_extension_skills.services.im_chat.service import ImChatService, add_chat_members_action, create_chat_action, disband_chat_action, get_chat_action, list_chat_members_action, remove_chat_member_action
@@ -95,3 +97,27 @@ def test_invoke_action_dispatches() -> None:
     )
 
     assert result["chat_id"] == "oc_123"
+
+
+def test_create_chat_action_uses_local_config_when_credentials_are_omitted(tmp_path, monkeypatch) -> None:
+    local_dir = tmp_path / ".local"
+    local_dir.mkdir()
+    (local_dir / "feishu-extension-skills.json").write_text(
+        json.dumps({"app_id": "file-app", "app_secret": "file-secret"}),
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(tmp_path)
+
+    captured: dict[str, str] = {}
+
+    class RecordingClient(FakeClient):
+        def create_chat(self, auth_context, payload):
+            captured["app_id"] = auth_context.app_id
+            captured["app_secret"] = auth_context.app_secret
+            return super().create_chat(auth_context, payload)
+
+    service = ImChatService(client=RecordingClient())
+    result = create_chat_action({"name": "项目群", "user_id_list": ["ou_1"]}, service)
+
+    assert result["chat_id"] == "oc_123"
+    assert captured == {"app_id": "file-app", "app_secret": "file-secret"}

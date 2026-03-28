@@ -42,5 +42,7 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 鉴权约定：
 
 - 优先在调用时传 `app_id` 与 `app_secret`
+- 若未显式传参，则读取本地 `.local/feishu-extension-skills.json`
+- 若本地配置文件不存在或未命中，再读取 `FEISHU_APP_ID` / `FEISHU_APP_SECRET`
 - `auth` 负责获取并缓存 `tenant_access_token`
-- 环境变量只作为兜底
+- 三层都未命中则报错

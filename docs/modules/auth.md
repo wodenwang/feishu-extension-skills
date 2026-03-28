@@ -8,7 +8,8 @@
 
 In scope：
 
-- 接收调用时传入的 `app_id` / `app_secret`
+- 按优先级解析 `app_id` / `app_secret`
+- 支持显式传参、本地配置文件和环境变量兜底
 - 获取 `tenant_access_token`
 - 内存缓存与提前刷新
 - 向业务 client 提供认证头

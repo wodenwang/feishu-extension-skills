@@ -49,12 +49,21 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 - `feishu-chat-member-remove`
 - `feishu-chat-disband`
 
-## 调用前需要准备什么
+## 凭证读取优先级
 
-每次调用都需要：
+当前实现支持 3 层凭证来源，优先级固定如下：
 
-- `app_id`
-- `app_secret`
+1. 显式传参
+2. 本地配置文件 `.local/feishu-extension-skills.json`
+3. 环境变量 `FEISHU_APP_ID` / `FEISHU_APP_SECRET`
+
+如果这 3 层都没有命中，会直接报错。
+
+推荐做法：
+
+- 生产或多租户场景优先显式传 `app_id` / `app_secret`
+- 本地开发或单租户调试可用 `.local/feishu-extension-skills.json`
+- CI 或临时 shell 会话可用环境变量
 
 成员相关参数只接受飞书标识：
 
@@ -64,6 +73,62 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 如果你传的是 `ou_...` 这类 `open_id`，记得同时传：
 
 - `member_id_type: "open_id"`
+
+## 本地配置文件格式
+
+默认会读取当前工作目录下的：
+
+```text
+.local/feishu-extension-skills.json
+```
+
+示例：
+
+```json
+{
+  "app_id": "cli_xxx",
+  "app_secret": "sec_xxx",
+  "base_url": "https://open.feishu.cn",
+  "timeout_seconds": 10,
+  "token_refresh_skew_seconds": 60,
+  "log_level": "INFO"
+}
+```
+
+仓库已经忽略 `.local/`，适合本地保存真实凭证，不会上传到 GitHub。
+
+## 凭证优先级示例
+
+### 1. 第一优先级：显式传参
+
+即使本地配置文件和环境变量里也有值，显式传参仍然会覆盖它们：
+
+```bash
+feishu-extension-skills invoke feishu-chat-get --args-json '{"app_id":"cli_explicit","app_secret":"sec_explicit","chat_id":"oc_xxx"}'
+```
+
+### 2. 第二优先级：本地配置文件
+
+如果 `--args-json` 里没传 `app_id` / `app_secret`，会读取 `.local/feishu-extension-skills.json`：
+
+```bash
+feishu-extension-skills invoke feishu-chat-get --args-json '{"chat_id":"oc_xxx"}'
+```
+
+### 3. 第三优先级：环境变量
+
+如果前两层都没有命中，则读取环境变量：
+
+```bash
+export FEISHU_APP_ID="cli_env_xxx"
+export FEISHU_APP_SECRET="sec_env_xxx"
+
+feishu-extension-skills invoke feishu-chat-get --args-json '{"chat_id":"oc_xxx"}'
+```
+
+### 4. 都没有命中时
+
+会返回配置错误，提示缺少 `app_id` 或 `app_secret`。
 
 ## 可直接复制的示例
 
@@ -150,5 +215,5 @@ python3 -m pip install -e '.[dev]'
 仓库内继续发布新版本可用：
 
 ```bash
-./scripts/publish_clawhub.sh 0.1.1 "your changelog"
+./scripts/publish_clawhub.sh 0.1.2 "your changelog"
 ```

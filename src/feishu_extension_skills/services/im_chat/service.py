@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from feishu_extension_skills.auth import AuthContext
+from feishu_extension_skills.core.config import load_config
 from feishu_extension_skills.core.errors import ValidationError
 from pydantic import ValidationError as PydanticValidationError
 
-from .client import ImChatAPIClient, ImChatValidationError
+from .client import ImChatAPIClient
 from .models import (
     AddChatMembersInput,
     ChatMembersPage,
@@ -25,43 +27,32 @@ class ImChatService:
         self._client = client or ImChatAPIClient()
 
     def create_chat(self, payload: CreateChatInput) -> ChatSummary:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._client.create_chat(self._auth_context(payload), payload)
 
     def get_chat(self, payload: GetChatInput) -> ChatSummary:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._client.get_chat(self._auth_context(payload), payload.chat_id)
 
     def disband_chat(self, payload: DisbandChatInput) -> ChatOperationResult:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._call_with_auth("disband_chat", payload)
 
     def list_chat_members(self, payload: ListChatMembersInput) -> ChatMembersPage:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._call_with_auth("list_chat_members", payload)
 
     def add_chat_members(self, payload: AddChatMembersInput) -> ChatOperationResult:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._call_with_auth("add_chat_members", payload)
 
     def remove_chat_member(self, payload: RemoveChatMemberInput) -> ChatOperationResult:
-        self._require_credentials(payload.app_id, payload.app_secret)
         return self._call_with_auth("remove_chat_member", payload)
 
     @staticmethod
-    def _require_credentials(app_id: str | None, app_secret: str | None) -> None:
-        if not app_id or not app_id.strip():
-            raise ImChatValidationError("app_id is required")
-        if not app_secret or not app_secret.strip():
-            raise ImChatValidationError("app_secret is required")
-
-    @staticmethod
     def _auth_context(payload: Any) -> AuthContext:
-        return AuthContext(
-            app_id=payload.app_id,
-            app_secret=payload.app_secret,
-            base_url=getattr(payload, "base_url", None) or "https://open.feishu.cn",
+        config = load_config(
+            app_id=getattr(payload, "app_id", None),
+            app_secret=getattr(payload, "app_secret", None),
+            base_url=getattr(payload, "base_url", None),
+            env=os.environ,
         )
+        return AuthContext.from_config(config)
 
     def _call_with_auth(self, method_name: str, payload: Any) -> Any:
         method = getattr(self._client, method_name)
