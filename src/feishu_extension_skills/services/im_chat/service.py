@@ -50,6 +50,7 @@ class ImChatService:
             app_id=getattr(payload, "app_id", None),
             app_secret=getattr(payload, "app_secret", None),
             base_url=getattr(payload, "base_url", None),
+            config_file=getattr(payload, "config_file", None),
             env=os.environ,
         )
         return AuthContext.from_config(config)

@@ -96,6 +96,24 @@ def test_load_config_prefers_explicit_args_over_local_file_and_environment() -> 
     assert config.log_level == "error"
 
 
+def test_load_config_supports_explicit_config_file_path(tmp_path) -> None:
+    config_file = tmp_path / "feishu-config.json"
+    config_file.write_text(
+        json.dumps(
+            {
+                "app_id": "custom-file-app",
+                "app_secret": "custom-file-secret",
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    config = load_config(config_file=config_file, env={})
+
+    assert config.app_id == "custom-file-app"
+    assert config.app_secret == "custom-file-secret"
+
+
 def test_load_config_requires_app_credentials() -> None:
     with pytest.raises(ConfigError, match="app_id"):
         load_config(env={"FEISHU_APP_SECRET": "cli-secret"})

@@ -64,10 +64,12 @@ def load_config(
     log_level: str | None = None,
     env: Mapping[str, str] | None = None,
     local_config: Mapping[str, Any] | None = None,
+    config_file: str | Path | None = None,
     local_config_path: str | Path | None = None,
 ) -> AppConfig:
     environment = dict(os.environ if env is None else env)
-    file_config = dict(local_config) if local_config is not None else dict(_load_local_config(local_config_path))
+    config_path = config_file if config_file is not None else local_config_path
+    file_config = dict(local_config) if local_config is not None else dict(_load_local_config(config_path))
 
     resolved_app_id = _coalesce(app_id, file_config.get("app_id"), environment.get("FEISHU_APP_ID"))
     resolved_app_secret = _coalesce(app_secret, file_config.get("app_secret"), environment.get("FEISHU_APP_SECRET"))

@@ -51,6 +51,8 @@ metadata: {"openclaw":{"emoji":"💬","homepage":"https://github.com/wodenwang/f
 
 如果这 3 层都没有命中，调用会失败。
 
+也可以在调用命令里通过 `--config-file /path/to/file.json` 显式指定本地配置文件路径。
+
 群相关 action 还需要按场景提供：
 
 - `chat_id`

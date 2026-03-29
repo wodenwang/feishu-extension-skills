@@ -121,3 +121,25 @@ def test_create_chat_action_uses_local_config_when_credentials_are_omitted(tmp_p
 
     assert result["chat_id"] == "oc_123"
     assert captured == {"app_id": "file-app", "app_secret": "file-secret"}
+
+
+def test_create_chat_action_supports_explicit_config_file(tmp_path) -> None:
+    config_file = tmp_path / "feishu-config.json"
+    config_file.write_text(json.dumps({"app_id": "custom-file-app", "app_secret": "custom-file-secret"}), encoding="utf-8")
+
+    captured: dict[str, str] = {}
+
+    class RecordingClient(FakeClient):
+        def create_chat(self, auth_context, payload):
+            captured["app_id"] = auth_context.app_id
+            captured["app_secret"] = auth_context.app_secret
+            return super().create_chat(auth_context, payload)
+
+    service = ImChatService(client=RecordingClient())
+    result = create_chat_action(
+        {"config_file": str(config_file), "name": "项目群", "user_id_list": ["ou_1"]},
+        service,
+    )
+
+    assert result["chat_id"] == "oc_123"
+    assert captured == {"app_id": "custom-file-app", "app_secret": "custom-file-secret"}

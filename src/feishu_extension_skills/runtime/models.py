@@ -27,6 +27,7 @@ class AuthArgs(BaseModel):
 
     app_id: str | None = None
     app_secret: str | None = None
+    config_file: str | None = None
     base_url: str | None = None
 
 
@@ -42,4 +43,3 @@ class RegisteredAction:
     name: str
     handler: Callable[[InvokeRequest], Any]
     description: str | None = None
-

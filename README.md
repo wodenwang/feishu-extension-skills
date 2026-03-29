@@ -82,6 +82,12 @@ feishu-extension-skills invoke <action> --args-json '<json>'
 .local/feishu-extension-skills.json
 ```
 
+如果你不想用默认路径，也可以在调用时显式指定：
+
+```bash
+feishu-extension-skills invoke feishu-chat-get --config-file /path/to/feishu-config.json --args-json '{"chat_id":"oc_xxx"}'
+```
+
 示例：
 
 ```json
@@ -113,6 +119,12 @@ feishu-extension-skills invoke feishu-chat-get --args-json '{"app_id":"cli_expli
 
 ```bash
 feishu-extension-skills invoke feishu-chat-get --args-json '{"chat_id":"oc_xxx"}'
+```
+
+或者显式指定本地配置文件路径：
+
+```bash
+feishu-extension-skills invoke feishu-chat-get --config-file /path/to/feishu-config.json --args-json '{"chat_id":"oc_xxx"}'
 ```
 
 ### 3. 第三优先级：环境变量
